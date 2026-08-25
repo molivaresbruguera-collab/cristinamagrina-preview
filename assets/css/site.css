@@ -219,11 +219,16 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
 }
 .nav__item.is-open .nav__panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 .nav__panel a {
-  display: block; padding: .62rem .85rem; border-radius: var(--radius-sm);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+  padding: .62rem .85rem; border-radius: var(--radius-sm);
   color: var(--ink); text-decoration: none; font-size: .93rem; font-weight: 500;
   transition: background .16s var(--ease);
 }
-.nav__panel a small { display: block; color: var(--ink-faint); font-weight: 400; font-size: .8rem; margin-top: .1rem; }
+/* Solo nombre y edad: la edad va alineada a la derecha, en tono apagado */
+.nav__panel a small {
+  color: var(--ink-faint); font-weight: 400; font-size: .8rem;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
 .nav__panel a:hover { background: var(--terracotta-wash); }
 
 .header__actions { display: flex; align-items: center; gap: .6rem; }
@@ -261,7 +266,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
 }
 .drawer a[aria-current="page"] { color: var(--terracotta-deep); }
 .drawer__sub { padding-left: 1.1rem !important; margin-bottom: .75rem !important; border-left: 2px solid var(--terracotta-soft); }
-.drawer__sub a { font-family: var(--font-body); font-size: 1rem; padding: .5rem 0; color: var(--ink-soft); }
+.drawer__sub a {
+  font-family: var(--font-body); font-size: 1rem; padding: .5rem 0; color: var(--ink-soft);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+}
+.drawer__age { color: var(--ink-faint); font-size: .85rem; white-space: nowrap; }
 .drawer .btn { margin-top: 2rem; width: 100%; justify-content: center; }
 
 /* --------------------------------------------------------------- 5. Buttons */
