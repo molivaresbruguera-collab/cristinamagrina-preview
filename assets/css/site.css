@@ -585,86 +585,22 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
 }
 
 /* ==========================================================================
-   19. COMPOSICIÓN CENTRADA
-   Todo el texto del sitio va centrado (petición del 25/08/2026).
-   Está agrupado aquí a propósito: para volver a la alineación a la izquierda
-   basta con borrar este bloque entero, sin tocar nada más.
+   19. TEXTOS LARGOS
+   El resto de la web vuelve a ir alineada a la izquierda. Solo los bloques de
+   lectura larga —About, Mi enfoque, los artículos del blog y las páginas
+   legales— llevan la columna centrada en la página y el texto justificado,
+   para que los dos márgenes queden rectos.
    ========================================================================== */
 
-body { text-align: center; }
-
-/* Los anchos de lectura se centran en su contenedor */
-.prose, .section-head, .hero__lead, .page-hero h1, .page-hero__lead,
-.accordion__body, .footer__disclaimer, .footer__brand p { margin-inline: auto; }
-.section-head { text-align: center; }
-
-/* Eyebrow: filete a ambos lados para que quede simétrico */
-.eyebrow { justify-content: center; }
-.eyebrow::after {
-  content: ""; width: 28px; height: 1px; background: var(--terracotta);
-  display: inline-block;
+.prose {
+  margin-inline: auto;          /* columna centrada: mismo margen a los dos lados */
+  text-align: justify;          /* bordes izquierdo y derecho rectos */
+  -webkit-hyphens: auto;
+  hyphens: auto;                /* sin partir palabras, justificar abre huecos feos */
 }
 
-.breadcrumb, .post-meta { justify-content: center; }
-.post-meta { display: flex; }
-
-/* Hero */
-.hero__inner { align-items: center; text-align: center; margin-inline: auto; }
-.hero__actions { justify-content: center; }
-
-/* Tarjetas y bloques */
-.card__body { align-items: center; }
-.card__body .link-arrow { align-self: center; }
-.tile__num { margin-inline: auto; }
-.pills { justify-content: center; }
-
-/* Listas: el marcador pasa a ser inline, si no queda pegado al margen
-   izquierdo mientras el texto se centra */
-.checklist li, .dotlist li { padding-left: 0; }
-.checklist li::before, .dotlist li::before {
-  position: static; display: inline-block; margin-right: .5rem;
-}
-.checklist li::before { vertical-align: -.28em; }
-.dotlist li::before { vertical-align: .16em; }
-
-.prose ul, .prose ol { list-style: none; padding-left: 0; }
-.prose ul > li::before { content: "•"; color: var(--terracotta); margin-right: .45rem; }
-.prose ol { counter-reset: pl; }
-.prose ol > li { counter-increment: pl; }
-.prose ol > li::before {
-  content: counter(pl) "."; color: var(--terracotta-deep);
-  font-weight: 600; margin-right: .45rem;
-}
-
-/* Acordeón: pregunta e icono centrados como un grupo */
-.accordion summary { justify-content: center; gap: .85rem; }
-
-/* Datos: el filete pasa de la izquierda a arriba */
-.stat {
-  border-left: 0; padding-left: 0;
-  border-top: 2px solid var(--terracotta-soft); padding-top: .8rem;
-}
-
-/* Tarifas: nombre, precio y botón apilados y centrados */
-.fee { flex-direction: column; align-items: center; gap: .85rem; }
-.fee__main { flex: none; max-width: 46rem; margin-inline: auto; }
-.fee__meta { margin-left: 0; justify-content: center; }
-
-/* Cita: filetes arriba y abajo en lugar de a la izquierda */
-.quote {
-  border-left: 0; padding: 1.1rem 0;
-  border-top: 1px solid var(--terracotta-soft);
-  border-bottom: 1px solid var(--terracotta-soft);
-}
-
-/* Menús */
-.nav__panel a, .drawer__sub a { justify-content: center; gap: .55rem; }
-.drawer__sub { border-left: 0; padding-left: 0 !important; }
-
-/* Pie */
-.footer__brand img { margin-inline: auto; }
-.footer__bottom { justify-content: center; }
-.footer__legal { justify-content: center; }
+/* Los títulos no se justifican: quedan al filo izquierdo de la columna */
+.prose h2, .prose h3 { text-align: left; -webkit-hyphens: manual; hyphens: manual; }
 
 
 /* ---------------------------------------------- Solo en la vista previa pública.
