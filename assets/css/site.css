@@ -328,19 +328,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
   max-width: 34rem; margin-bottom: 2.25rem; line-height: 1.55;
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; }
-.hero__badge {
-  display: inline-flex; align-items: center; gap: .55rem; align-self: flex-start;
-  padding: .45rem 1rem .45rem .55rem; margin-bottom: 1.75rem;
-  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.26);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-radius: 999px; color: #FFF; font-size: .82rem; font-weight: 500;
+/* El CTA principal lleva una etiqueta larga: en pantallas estrechas tiene que
+   poder partirse, porque .btn fuerza white-space: nowrap por defecto. */
+@media (max-width: 620px) {
+  .hero__actions .btn { white-space: normal; text-align: center; }
 }
-.hero__badge b {
-  background: var(--terracotta); color: #FFF; font-weight: 600;
-  padding: .2rem .6rem; border-radius: 999px; font-size: .72rem;
-  letter-spacing: .04em; text-transform: uppercase;
-}
-
 /* Page hero (interior pages) */
 .page-hero { padding-block: clamp(3.25rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem); background: var(--cream-deep); }
 .page-hero__lead { font-size: var(--step-1); color: var(--ink-soft); max-width: 44rem; line-height: 1.55; }
