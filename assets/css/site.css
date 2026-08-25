@@ -639,6 +639,29 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
   }
 }
 
+/* --------------------------------------------------- 21. Selector de idioma */
+.lang-toggle {
+  display: inline-flex; align-items: baseline; gap: .28rem;
+  padding: .5rem .7rem; border-radius: 999px;
+  font-family: var(--font-body); font-size: .8rem; font-weight: 500;
+  letter-spacing: .06em; color: var(--ink-faint); text-decoration: none;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.lang-toggle b { color: var(--terracotta-deep); font-weight: 600; }
+.lang-toggle__sep { opacity: .45; }
+.lang-toggle:hover { background: rgba(202, 123, 96, .1); color: var(--ink); }
+.lang-toggle:hover b { color: var(--terracotta-dark); }
+/* El selector ocupa sitio en la cabecera. En pantallas estrechas se reduce a
+   la lengua de destino y, más abajo, el CTA cede su hueco al botón de menú:
+   sin esto el menú se salía de la pantalla a 320px. */
+@media (max-width: 460px) {
+  .lang-toggle > span { display: none; }
+  .lang-toggle { padding: .5rem .45rem; font-size: .8rem; }
+}
+@media (max-width: 400px) {
+  .header__actions .btn--primary { display: none; }
+}
+
 
 /* ---------------------------------------------- Solo en la vista previa pública.
    Este bloque NO existe en el sitio real; lo añade tools/build_public_preview.py */
