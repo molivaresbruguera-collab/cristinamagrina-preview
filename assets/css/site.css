@@ -662,6 +662,29 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
   .header__actions .btn--primary { display: none; }
 }
 
+/* ------------------------------------------------- 22. Bloque de contacto
+   `mailto:` no hace nada si el dispositivo no tiene app de correo configurada
+   —muy común en quien usa webmail—, así que se ofrecen varias vías. */
+.contact-card { margin-top: 1.5rem; }
+.contact-card__mail {
+  font-family: var(--font-display);
+  font-size: var(--step-2); line-height: 1.2;
+  margin-bottom: 1.25rem; word-break: break-word;
+}
+.contact-card__mail a { color: var(--ink); text-decoration: none; }
+.contact-card__mail a:hover { color: var(--terracotta-deep); text-decoration: underline; }
+.contact-card__actions {
+  display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
+}
+.contact-card__actions .btn { font-size: .88rem; padding: .72rem 1.2rem; }
+.contact-card__hint {
+  margin-top: 1.1rem; font-size: .84rem; color: var(--ink-soft);
+  max-width: 46rem; margin-inline: auto;
+}
+.btn[data-copy].is-copied {
+  background: var(--sage-panel); border-color: var(--sage-panel); color: var(--ink);
+}
+
 
 /* ---------------------------------------------- Solo en la vista previa pública.
    Este bloque NO existe en el sitio real; lo añade tools/build_public_preview.py */

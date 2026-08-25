@@ -20,6 +20,40 @@
     });
   }
 
+  /* ------------------------------------------- 1b. Copiar la dirección */
+  // Para quien no tenga app de correo: copiar y pegar en su webmail.
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+    var original = btn.textContent;
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy");
+      var done = function () {
+        btn.textContent = btn.getAttribute("data-copied") || "OK";
+        btn.classList.add("is-copied");
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove("is-copied");
+        }, 2200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+      function fallback() {
+        // Navegadores antiguos o contextos sin permiso de portapapeles
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "absolute";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { /* sin acción */ }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
   /* ------------------------------------------------------ 2. Sticky header */
   var header = document.getElementById("siteHeader");
   if (header) {
