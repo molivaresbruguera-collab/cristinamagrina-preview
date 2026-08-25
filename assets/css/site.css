@@ -662,27 +662,60 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
   .header__actions .btn--primary { display: none; }
 }
 
-/* ------------------------------------------------- 22. Bloque de contacto
-   `mailto:` no hace nada si el dispositivo no tiene app de correo configurada
-   —muy común en quien usa webmail—, así que se ofrecen varias vías. */
-.contact-card { margin-top: 1.5rem; }
-.contact-card__mail {
-  font-family: var(--font-display);
-  font-size: var(--step-2); line-height: 1.2;
-  margin-bottom: 1.25rem; word-break: break-word;
+/* -------------------------------------------- 22. Ventana de reserva
+   Un `mailto:` no hace nada si el dispositivo no tiene app de correo, así que
+   al pulsar cualquier CTA se abre esta ventana con varias vías. Sin JavaScript
+   el enlace sigue siendo un mailto normal y la ventana nunca aparece. */
+.bk {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center; padding: 1.25rem;
 }
-.contact-card__mail a { color: var(--ink); text-decoration: none; }
-.contact-card__mail a:hover { color: var(--terracotta-deep); text-decoration: underline; }
-.contact-card__actions {
-  display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
+.bk[hidden] { display: none; }
+.bk__backdrop {
+  position: absolute; inset: 0; background: rgba(24, 18, 15, .55);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  animation: bk-fade .18s var(--ease);
 }
-.contact-card__actions .btn { font-size: .88rem; padding: .72rem 1.2rem; }
-.contact-card__hint {
-  margin-top: 1.1rem; font-size: .84rem; color: var(--ink-soft);
-  max-width: 46rem; margin-inline: auto;
+.bk__panel {
+  position: relative; width: min(100%, 34rem);
+  max-height: calc(100vh - 2.5rem); overflow-y: auto;
+  background: var(--cream-warm); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.75rem, 5vw, 2.5rem);
+  text-align: center;
+  animation: bk-in .22s var(--ease);
+}
+@keyframes bk-fade { from { opacity: 0 } }
+@keyframes bk-in { from { opacity: 0; transform: translateY(10px) scale(.98) } }
+
+.bk__close {
+  position: absolute; top: .6rem; right: .6rem;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 0; background: none; cursor: pointer;
+  font-size: 1.6rem; line-height: 1; color: var(--ink-faint);
+  transition: background .16s var(--ease), color .16s var(--ease);
+}
+.bk__close:hover { background: var(--cream-deep); color: var(--ink); }
+
+.bk__title { font-size: var(--step-2); margin-bottom: .5rem; }
+.bk__mail {
+  font-family: var(--font-display); font-size: var(--step-1);
+  margin-bottom: 1.35rem; word-break: break-word;
+}
+.bk__mail a { color: var(--ink); text-decoration: none; }
+.bk__mail a:hover { color: var(--terracotta-deep); text-decoration: underline; }
+
+.bk__actions { display: grid; gap: .55rem; }
+.bk__actions .btn { width: 100%; justify-content: center; font-size: .92rem; }
+.bk__hint {
+  margin-top: 1.1rem; font-size: .82rem; line-height: 1.5; color: var(--ink-soft);
 }
 .btn[data-copy].is-copied {
   background: var(--sage-panel); border-color: var(--sage-panel); color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk__backdrop, .bk__panel { animation: none; }
 }
 
 

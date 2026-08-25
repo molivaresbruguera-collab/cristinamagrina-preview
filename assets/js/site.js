@@ -7,20 +7,58 @@
 
   var cfg = window.SITE_CONFIG || {};
 
-  /* ------------------------------------------------- 1. Booking destination */
-  // Buttons marked data-book keep their HTML href (a mailto) as a fallback and
-  // are only rewritten when a real booking URL has been configured.
-  if (cfg.bookingUrl) {
-    Array.prototype.forEach.call(document.querySelectorAll("[data-book]"), function (a) {
-      a.setAttribute("href", cfg.bookingUrl);
-      if (cfg.bookingNewTab !== false) {
-        a.setAttribute("target", "_blank");
-        a.setAttribute("rel", "noopener noreferrer");
-      }
+  /* --------------------------------------------- 1. Ventana de reserva */
+  // Los CTA llevan un mailto: como respaldo. Si hay JavaScript, se intercepta
+  // el clic y se abre una ventana con varias vías, porque un mailto no hace
+  // nada cuando el dispositivo no tiene app de correo configurada.
+  var dialog = document.getElementById("bookDialog");
+  var opener = null;
+
+  function openDialog(trigger) {
+    if (!dialog) return false;
+    opener = trigger || null;
+    dialog.hidden = false;
+    document.body.style.overflow = "hidden";
+    var first = dialog.querySelector(".bk__actions .btn");
+    if (first) first.focus();
+    return true;
+  }
+
+  function closeDialog() {
+    if (!dialog || dialog.hidden) return;
+    dialog.hidden = true;
+    document.body.style.overflow = "";
+    if (opener && opener.focus) opener.focus();
+    opener = null;
+  }
+
+  if (dialog) {
+    dialog.addEventListener("click", function (e) {
+      if (e.target.closest("[data-bk-close]")) closeDialog();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeDialog();
+    });
+    // Mantener el foco dentro de la ventana mientras está abierta
+    dialog.addEventListener("keydown", function (e) {
+      if (e.key !== "Tab") return;
+      var f = dialog.querySelectorAll('a[href], button:not([disabled])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
   }
 
-  /* ------------------------------------------- 1b. Copiar la dirección */
+  document.addEventListener("click", function (e) {
+    var trigger = e.target.closest("[data-book]");
+    if (!trigger) return;
+    // Si hay calendario configurado, el enlace ya apunta ahí: no interceptar
+    if (cfg.bookingUrl) return;
+    if (openDialog(trigger)) e.preventDefault();
+  });
+
+  /* ----------------------------------------- 1b. Copiar la dirección */
   // Para quien no tenga app de correo: copiar y pegar en su webmail.
   Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
     var original = btn.textContent;
@@ -40,7 +78,6 @@
         fallback();
       }
       function fallback() {
-        // Navegadores antiguos o contextos sin permiso de portapapeles
         var ta = document.createElement("textarea");
         ta.value = text;
         ta.setAttribute("readonly", "");

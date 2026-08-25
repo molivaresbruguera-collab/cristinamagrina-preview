@@ -43,7 +43,7 @@
     </nav>
     <div class="header__actions">
       <a class="lang-toggle" href="../adults.html" lang="en" title="View this page in English" aria-label="View this page in English"><span aria-hidden="true">ES</span><span class="lang-toggle__sep" aria-hidden="true">/</span><b>EN</b></a>
-      <a class="btn btn--primary btn--sm" href="../book.html#contact" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span class="btn__label">Reservar</span></a>
+      <a class="btn btn--primary btn--sm" href="mailto:info@cristinamagrina.ca?subject=Consulta%20gratuita%20de%2015%20minutos" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span class="btn__label">Reservar</span></a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="drawer" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -54,7 +54,7 @@
   <nav aria-label="Mobile">
     <ul><li><a href="../index.html">Inicio</a></li><li><a href="../about.html">Sobre mí</a></li><li><a href="../who-i-help.html">A quién acompaño</a><ul class="drawer__sub"><li><a href="../adults.html" aria-current="page">Adultos<span class="drawer__age">18+</span></a></li><li><a href="../parents.html">Familias<span class="drawer__age">Todas las edades</span></a></li><li><a href="../adolescents.html">Adolescentes<span class="drawer__age">13–17</span></a></li><li><a href="../children.html">Niños<span class="drawer__age">9+</span></a></li></ul></li><li><a href="../approach.html">Mi enfoque</a></li><li><a href="../book.html">Tarifas</a></li><li><a href="../faq.html">Preguntas</a></li></ul>
   </nav>
-  <a class="btn btn--primary" href="../book.html#contact" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Reserva una consulta gratuita</a>
+  <a class="btn btn--primary" href="mailto:info@cristinamagrina.ca?subject=Consulta%20gratuita%20de%2015%20minutos" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Reserva una consulta gratuita</a>
 </div>
 <main id="main">
 
@@ -133,7 +133,7 @@
       <h2>¿Damos el primer paso?</h2>
       <p>Reserva una consulta gratuita de 15 minutos para contarme qué te trae hasta aquí y ver si encajamos para trabajar juntas.</p>
       <div class="cta__actions">
-        <a class="btn btn--light" href="book.html#contact" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Reserva una consulta gratuita</a>
+        <a class="btn btn--light" href="mailto:info@cristinamagrina.ca?subject=Consulta%20gratuita%20de%2015%20minutos" data-book><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Reserva una consulta gratuita</a>
       </div>
       <p class="cta__note">Sesiones online en Ontario, Quebec y Nueva Escocia · Español e inglés</p>
     </div>
@@ -183,6 +183,23 @@
     </div>
   </div>
 </footer>
+<div class="bk" id="bookDialog" hidden>
+  <div class="bk__backdrop" data-bk-close></div>
+  <div class="bk__panel" role="dialog" aria-modal="true" aria-labelledby="bkTitle">
+    <button class="bk__close" type="button" data-bk-close aria-label="Cerrar">&times;</button>
+    <p class="eyebrow" style="justify-content:center">Escríbeme a</p>
+    <h2 id="bkTitle" class="bk__title">Consulta gratuita de 15 minutos</h2>
+    <p class="bk__mail"><a href="mailto:info@cristinamagrina.ca?subject=Consulta%20gratuita%20de%2015%20minutos">info@cristinamagrina.ca</a></p>
+    <div class="bk__actions">
+      <a class="btn btn--primary" href="mailto:info@cristinamagrina.ca?subject=Consulta%20gratuita%20de%2015%20minutos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>Abrir mi app de correo</a>
+      <a class="btn btn--outline" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info@cristinamagrina.ca&amp;su=Consulta%20gratuita%20de%2015%20minutos" target="_blank" rel="noopener">Escribir desde Gmail</a>
+      <a class="btn btn--outline" href="https://outlook.live.com/mail/0/deeplink/compose?to=info@cristinamagrina.ca&amp;subject=Consulta%20gratuita%20de%2015%20minutos" target="_blank" rel="noopener">Escribir desde Outlook</a>
+      <button class="btn btn--outline" type="button" data-copy="info@cristinamagrina.ca"
+              data-copied="Copiada">Copiar dirección</button>
+    </div>
+    <p class="bk__hint">Si el primer botón no abre nada, puede que tu dispositivo no tenga configurada una app de correo: copia la dirección o usa Gmail u Outlook.</p>
+  </div>
+</div>
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/site.js"></script>
 </body>
