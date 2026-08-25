@@ -359,8 +359,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
   .split { grid-template-columns: 1fr 1fr; }
   .split--reverse .split__media { order: -1; }
   .split--text-wide { grid-template-columns: 1.15fr .85fr; }
+  /* Imagen mas contenida frente al texto (Approach) */
+  .split--media-sm { grid-template-columns: 1.75fr 1fr; }
 }
 .split__media { position: relative; }
+/* Alinea la imagen con la primera linea del texto en vez de centrarla */
+.split--top { align-items: start; }
+.split--media-sm .split__media img { aspect-ratio: 1 / 1; }
 .split__media img {
   width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow);
   aspect-ratio: 4 / 5; object-fit: cover;
