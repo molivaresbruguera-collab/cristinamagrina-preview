@@ -52,7 +52,7 @@
   --shadow-lg: 0 4px 8px rgba(43,36,32,.05), 0 24px 60px rgba(43,36,32,.13);
 
   --ease: cubic-bezier(.22, .61, .36, 1);
-  --header-h: 76px;
+  --header-h: 92px;
 }
 
 /* ---------------------------------------------------------- 2. Base / reset */
@@ -175,8 +175,19 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
   min-height: var(--header-h);
 }
 .brand { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
-.brand img { height: 42px; width: auto; }
-@media (max-width: 420px) { .brand img { height: 34px; } }
+.brand { min-width: 0; }
+.brand img { height: 56px; width: auto; }
+
+/* En pantallas estrechas el logo grande se comia el boton de menu: el CTA de la
+   cabecera pasa a ser solo el icono y el logo baja un poco, pero sigue siendo
+   mayor que antes (era 42px / 34px en movil). */
+@media (max-width: 560px) {
+  .brand img { height: 48px; }
+  .header__actions .btn--primary { padding: .62rem .78rem; }
+  .btn__label { position: absolute; width: 1px; height: 1px; overflow: hidden;
+                clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 400px) { .brand img { height: 44px; } }
 
 /* Desktop nav */
 .nav { display: none; }
@@ -518,7 +529,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 3rem 0; }
 .site-footer a:hover { color: var(--terracotta); }
 .footer__grid { display: grid; gap: clamp(2rem, 4vw, 3rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
 .footer__brand { max-width: 22rem; }
-.footer__brand img { height: 40px; width: auto; margin-bottom: 1.25rem; }
+.footer__brand img { height: 62px; width: auto; margin-bottom: 1.4rem; }
 .footer__brand p { color: rgba(248,245,241,.6); font-size: .92rem; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
 .footer__bottom {
