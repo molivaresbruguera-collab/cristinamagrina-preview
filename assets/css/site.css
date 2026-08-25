@@ -602,6 +602,29 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
 /* Los títulos no se justifican: quedan al filo izquierdo de la columna */
 .prose h2, .prose h3 { text-align: left; -webkit-hyphens: manual; hyphens: manual; }
 
+/* Retrato dentro del cuerpo de texto (About): flota a la derecha, el texto lo
+   rodea y, en cuanto lo pasa, ocupa todo el ancho de la columna. */
+.prose--wrap { max-width: none; }
+.prose--wrap::after { content: ""; display: block; clear: both; }
+
+.prose__figure {
+  float: right;
+  width: min(40%, 330px);
+  margin: .3rem 0 1.1rem 2.25rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* En móvil no hay ancho para rodearla: pasa a ir arriba, a todo lo ancho */
+@media (max-width: 640px) {
+  .prose__figure {
+    float: none; width: 100%; margin: 0 0 1.25rem;
+    aspect-ratio: 5 / 4;
+  }
+}
+
 
 /* ---------------------------------------------- Solo en la vista previa pública.
    Este bloque NO existe en el sitio real; lo añade tools/build_public_preview.py */
