@@ -11,10 +11,15 @@
   // Los CTA llevan un mailto: como respaldo. Si hay JavaScript, se intercepta
   // el clic y se abre una ventana con varias vías, porque un mailto no hace
   // nada cuando el dispositivo no tiene app de correo configurada.
-  var dialog = document.getElementById("bookDialog");
+  //
+  // La ventana se busca en cada clic en vez de guardarla al cargar: así sigue
+  // funcionando si el documento la sustituye (p. ej. al cambiar de idioma).
   var opener = null;
 
+  function getDialog() { return document.getElementById("bookDialog"); }
+
   function openDialog(trigger) {
+    var dialog = getDialog();
     if (!dialog) return false;
     opener = trigger || null;
     dialog.hidden = false;
@@ -25,6 +30,7 @@
   }
 
   function closeDialog() {
+    var dialog = getDialog();
     if (!dialog || dialog.hidden) return;
     dialog.hidden = true;
     document.body.style.overflow = "";
@@ -32,63 +38,65 @@
     opener = null;
   }
 
-  if (dialog) {
-    dialog.addEventListener("click", function (e) {
-      if (e.target.closest("[data-bk-close]")) closeDialog();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeDialog();
-    });
-    // Mantener el foco dentro de la ventana mientras está abierta
-    dialog.addEventListener("keydown", function (e) {
-      if (e.key !== "Tab") return;
-      var f = dialog.querySelectorAll('a[href], button:not([disabled])');
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    });
-  }
-
   document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-bk-close]")) { closeDialog(); return; }
+
     var trigger = e.target.closest("[data-book]");
-    if (!trigger) return;
-    // Si hay calendario configurado, el enlace ya apunta ahí: no interceptar
-    if (cfg.bookingUrl) return;
-    if (openDialog(trigger)) e.preventDefault();
+    if (trigger) {
+      // Si hay calendario configurado, el enlace ya apunta ahí: no interceptar
+      if (cfg.bookingUrl) return;
+      if (openDialog(trigger)) e.preventDefault();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    var dialog = getDialog();
+    if (!dialog || dialog.hidden) return;
+    if (e.key === "Escape") { closeDialog(); return; }
+    if (e.key !== "Tab") return;
+    // Mantener el foco dentro de la ventana mientras está abierta
+    var f = dialog.querySelectorAll('a[href], button:not([disabled])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* ----------------------------------------- 1b. Copiar la dirección */
-  // Para quien no tenga app de correo: copiar y pegar en su webmail.
-  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
-    var original = btn.textContent;
-    btn.addEventListener("click", function () {
-      var text = btn.getAttribute("data-copy");
-      var done = function () {
-        btn.textContent = btn.getAttribute("data-copied") || "OK";
-        btn.classList.add("is-copied");
-        setTimeout(function () {
-          btn.textContent = original;
-          btn.classList.remove("is-copied");
-        }, 2200);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, fallback);
-      } else {
-        fallback();
-      }
-      function fallback() {
-        var ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "absolute";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand("copy"); done(); } catch (e) { /* sin acción */ }
-        document.body.removeChild(ta);
-      }
-    });
+  // Delegado, para que siga funcionando si la ventana se reemplaza.
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-copy]");
+    if (!btn || btn.dataset.busy) return;
+    var text = btn.getAttribute("data-copy");
+    var original = btn.getAttribute("data-label") || btn.textContent;
+    btn.setAttribute("data-label", original);
+
+    function done() {
+      btn.dataset.busy = "1";
+      btn.textContent = btn.getAttribute("data-copied") || "OK";
+      btn.classList.add("is-copied");
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.classList.remove("is-copied");
+        delete btn.dataset.busy;
+      }, 2200);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch (err) { /* sin acción */ }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
   });
 
   /* ------------------------------------------------------ 2. Sticky header */
