@@ -401,6 +401,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.25rem 0; }
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+/* Algunas terapias de la página de enfoque no tienen una sigla asentada, así que
+   el distintivo se estira: círculo cuando el texto es corto, píldora cuando no. */
+.tile__num--label {
+  width: auto; min-width: 42px; padding: 0 .95rem;
+  border-radius: 999px; font-size: .85rem;
+  letter-spacing: .08em; text-transform: uppercase;
+}
 .tile h3 { font-size: var(--step-1); margin-bottom: .5rem; }
 .tile p { color: var(--ink-soft); font-size: .95rem; }
 .tile__num {
